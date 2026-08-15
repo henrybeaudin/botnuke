@@ -1,4 +1,4 @@
-# app-purge
+# botnuke
 
 Thoroughly remove a macOS application and the files it leaves behind.
 
@@ -7,7 +7,7 @@ directories, caches, preferences, saved state, login items, launch agents, and
 any background helper processes stay on disk — sometimes still running, and
 sometimes ready to restore themselves the moment the app is reinstalled.
 
-`app-purge.sh` finds those, stops what's running, and moves everything into a
+`botnuke.sh` finds those, stops what's running, and moves everything into a
 dated quarantine folder.
 
 **Nothing is ever deleted, and nothing is touched without `--apply`.**
@@ -15,8 +15,8 @@ dated quarantine folder.
 ## Usage
 
 ```sh
-./app-purge.sh "Some App"            # dry run — report only (default)
-./app-purge.sh --apply "Some App"    # quarantine for real
+./botnuke.sh "Some App"            # dry run — report only (default)
+./botnuke.sh --apply "Some App"    # quarantine for real
 ```
 
 The name should match the bundle in `/Applications` without the `.app` suffix.
@@ -37,7 +37,7 @@ Quote it if it contains spaces.
 An Electron app that also runs a background daemon under an unrelated name:
 
 ```sh
-./app-purge.sh --apply --extra-pattern 'helper-daemon' "Some App"
+./botnuke.sh --apply --extra-pattern 'helper-daemon' "Some App"
 ```
 
 ## What it does
@@ -76,7 +76,7 @@ Reported, never acted on:
 ## Safety model
 
 - **Dry run by default.** `--apply` is required to change anything.
-- **Move, never delete.** Everything lands in `~/app-purge-quarantine-<stamp>/`,
+- **Move, never delete.** Everything lands in `~/botnuke-quarantine-<stamp>/`,
   mirroring its original path, with a `report.txt`. Inspect it, restore
   anything you want back, delete the folder when satisfied.
 - **Refuses `sudo`.** It resolves `$HOME`; running it elevated would either
@@ -109,3 +109,7 @@ Run it once more in dry-run mode after a reboot to confirm nothing came back.
 ## License
 
 MIT
+
+## Contact
+
+botnuke at younever nu

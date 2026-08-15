@@ -5,8 +5,8 @@
 
 # Never commit quarantine output — it contains real paths and can contain
 # credential files pulled out of the app being removed.
-app-purge-quarantine-*/
-*-purge-*/
+botnuke-quarantine-*/
+*-quarantine-*/
 report.txt
 
 # Editors

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# app-purge.sh — thoroughly remove a macOS application and its leftovers
+# botnuke.sh — thoroughly remove a macOS application and its leftovers
 #
 # Deleting an app from /Applications leaves its support files, caches,
 # preferences, login items, and any background helpers behind. This finds
@@ -9,8 +9,8 @@
 #
 # Nothing is ever deleted. Nothing is touched without --apply.
 #
-#   ./app-purge.sh "Some App"            # dry run: report only (default)
-#   ./app-purge.sh --apply "Some App"    # actually quarantine
+#   ./botnuke.sh "Some App"            # dry run: report only (default)
+#   ./botnuke.sh --apply "Some App"    # actually quarantine
 #
 # Operates on the current user only ($HOME). Run WITHOUT sudo.
 #
@@ -19,9 +19,9 @@
 #
 
 # --- guarantee real bash, regardless of how we were invoked ---------------
-if [ -z "${_APURGE_BASH:-}" ]; then
-  _APURGE_BASH=1
-  export _APURGE_BASH
+if [ -z "${_BOTNUKE_BASH:-}" ]; then
+  _BOTNUKE_BASH=1
+  export _BOTNUKE_BASH
   exec /bin/bash "$0" "$@"
 fi
 # --------------------------------------------------------------------------
@@ -38,7 +38,7 @@ APP_NAME=""
 
 usage() {
   cat <<'HELPEOF' | sed "s/{{V}}/$VERSION/; s/{{S}}/$SELF/g"
-app-purge.sh {{V}} — remove a macOS app and everything it left behind
+botnuke.sh {{V}} — remove a macOS app and everything it left behind
 
 USAGE
   {{S}} [options] "App Name"
@@ -139,7 +139,7 @@ for cand in "/Applications/$APP_NAME.app" "$HOME/Applications/$APP_NAME.app"; do
 done
 
 STAMP="$(date +%Y%m%d-%H%M%S)"
-Q="$HOME/app-purge-quarantine-$STAMP"     # deliberately free of the app slug,
+Q="$HOME/botnuke-quarantine-$STAMP"       # deliberately free of the app slug,
                                           # so the path can't match PROC_RE
 LOG=""
 if [ "$APPLY" = "1" ]; then
@@ -216,7 +216,7 @@ find_near_misses() {
 
 ############################################################
 say "=================================================="
-say " app-purge $VERSION"
+say " botnuke $VERSION"
 say " target:     $APP_NAME"
 say " bundle:     ${APP_PATH:-not found in /Applications or ~/Applications}"
 say " match:      $PROC_RE"
